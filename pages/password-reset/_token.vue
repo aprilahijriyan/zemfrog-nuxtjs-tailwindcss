@@ -6,7 +6,7 @@
           src="~assets/images/verified.svg"
           class="w-full object-cover hidden lg:block"
           height="200px"
-        >
+        />
       </div>
       <div class="flex-1">
         <div
@@ -30,7 +30,8 @@
                 <label
                   for="password"
                   class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
-                >Password:</label>
+                  >Password:</label
+                >
                 <div class="relative">
                   <div
                     class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
@@ -60,16 +61,16 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="123"
                     @input="$v.password.$touch()"
-                  >
+                  />
                 </div>
                 <div class="flex flex-col">
                   <p v-if="$v.password.$error" class="text-xs text-red-400">
-                    <span
-                      v-if="!$v.password.min_length"
-                    >* Minimum password length is 8</span>
-                    <span
-                      v-else-if="!$v.password.required"
-                    >* Password required</span>
+                    <span v-if="!$v.password.min_length"
+                      >* Minimum password length is 8</span
+                    >
+                    <span v-else-if="!$v.password.required"
+                      >* Password required</span
+                    >
                   </p>
                 </div>
               </div>
@@ -77,7 +78,8 @@
                 <label
                   for="password_confirm"
                   class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
-                >Password Confirmation:</label>
+                  >Password Confirmation:</label
+                >
                 <div class="relative">
                   <div
                     class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
@@ -107,22 +109,22 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="123"
                     @input="$v.password_confirm.$touch()"
-                  >
+                  />
                 </div>
                 <div class="flex flex-col">
                   <p
                     v-if="$v.password_confirm.$error"
                     class="text-xs text-red-400"
                   >
-                    <span
-                      v-if="!$v.password_confirm.min_length"
-                    >* Minimum password length is 8</span>
-                    <span
-                      v-else-if="!$v.password_confirm.required"
-                    >* Password confirmation required</span>
-                    <span
-                      v-else-if="!$v.password_confirm.is_match"
-                    >* Password confirmation does not match</span>
+                    <span v-if="!$v.password_confirm.min_length"
+                      >* Minimum password length is 8</span
+                    >
+                    <span v-else-if="!$v.password_confirm.required"
+                      >* Password confirmation required</span
+                    >
+                    <span v-else-if="!$v.password_confirm.is_match"
+                      >* Password confirmation does not match</span
+                    >
                   </p>
                 </div>
               </div>
@@ -159,54 +161,54 @@
 </template>
 
 <script>
-import { required, sameAs, minLength } from 'vuelidate/lib/validators'
+import { required, sameAs, minLength } from "vuelidate/lib/validators";
 
 export default {
-  middleware: ['is_logged_in', 'password_reset'],
-  data () {
+  middleware: ["is_logged_in", "password_reset"],
+  data() {
     return {
-      password: '',
-      password_confirm: ''
-    }
+      password: "",
+      password_confirm: "",
+    };
   },
   validations: {
     password: {
       required,
-      min_length: minLength(8)
+      min_length: minLength(8),
     },
     password_confirm: {
       required,
       min_length: minLength(8),
-      is_match: sameAs('password')
-    }
+      is_match: sameAs("password"),
+    },
   },
   methods: {
-    doChangePassword () {
-      this.$v.$touch()
+    doChangePassword() {
+      this.$v.$touch();
       if (!this.$v.$invalid) {
-        const data = new FormData()
-        data.append('password', this.password)
+        const data = new FormData();
+        data.append("password", this.password);
         this.$axios
           .post(
-            '/auth/jwt/password-reset/' + this.$nuxt.context.params.token,
+            "/auth/jwt/password-reset/" + this.$nuxt.context.params.token,
             data
           )
           .then((_resp) => {
             this.$swal({
-              title: 'Password changed successfully.',
-              icon: 'info',
-              confirmButtonText: 'Login Now',
-              allowOutsideClick: false
-            }).then((isConfirm) => {
-              if (isConfirm) {
-                this.$router.push('/login')
+              title: "Password changed successfully.",
+              icon: "info",
+              confirmButtonText: "Login Now",
+              allowOutsideClick: false,
+            }).then(({ isConfirmed }) => {
+              if (isConfirmed) {
+                this.$router.push("/login");
               }
-            })
-          })
+            });
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
