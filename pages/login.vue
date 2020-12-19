@@ -8,7 +8,7 @@
           class="hidden lg:block"
           height="400px"
           width="500px"
-        >
+        />
       </div>
       <div class="flex-1">
         <div
@@ -32,7 +32,8 @@
                 <label
                   for="email"
                   class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
-                >Email:</label>
+                  >Email:</label
+                >
                 <div class="relative">
                   <div
                     class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
@@ -60,16 +61,16 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="user@email.com"
                     @input="$v.email.$touch()"
-                  >
+                  />
                 </div>
                 <div class="flex flex-col">
                   <p
                     v-if="$v.email.$error && !login_error"
                     class="text-xs text-red-400"
                   >
-                    <span
-                      v-if="!$v.email.email"
-                    >* Please enter your email correctly</span>
+                    <span v-if="!$v.email.email"
+                      >* Please enter your email correctly</span
+                    >
                     <span v-else-if="!$v.email.required">* Email required</span>
                   </p>
                 </div>
@@ -78,7 +79,8 @@
                 <label
                   for="password"
                   class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
-                >Password:</label>
+                  >Password:</label
+                >
                 <div class="relative">
                   <div
                     class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
@@ -108,19 +110,19 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="123"
                     @input="$v.password.$touch()"
-                  >
+                  />
                 </div>
                 <div class="flex flex-col">
                   <p
                     v-if="$v.password.$error && !login_error"
                     class="text-xs text-red-400"
                   >
-                    <span
-                      v-if="!$v.password.min_length"
-                    >* Minimum password length is 8</span>
-                    <span
-                      v-else-if="!$v.password.required"
-                    >* Password required</span>
+                    <span v-if="!$v.password.min_length"
+                      >* Minimum password length is 8</span
+                    >
+                    <span v-else-if="!$v.password.required"
+                      >* Password required</span
+                    >
                   </p>
                 </div>
               </div>
@@ -177,50 +179,50 @@
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, minLength } from "vuelidate/lib/validators";
 
 export default {
-  middleware: 'is_logged_in',
-  data () {
+  middleware: "is_logged_in",
+  data() {
     return {
-      email: '',
-      password: '',
-      login_error: false
-    }
+      email: "",
+      password: "",
+      login_error: false,
+    };
   },
   validations: {
     email: {
       required,
-      email
+      email,
     },
     password: {
-      required
-      // min_length: minLength(8)
-    }
+      required,
+      min_length: minLength(8),
+    },
   },
   methods: {
-    doLogin () {
-      console.log('login nih')
-      this.$v.$touch()
+    doLogin() {
+      console.log("login nih");
+      this.$v.$touch();
       if (this.$v.$invalid) {
-        this.login_error = false
+        this.login_error = false;
       } else {
-        const data = new FormData()
-        data.append('username', this.email)
-        data.append('password', this.password)
+        const data = new FormData();
+        data.append("username", this.email);
+        data.append("password", this.password);
         this.$auth
-          .loginWith('local', { data })
+          .loginWith("local", { data })
           .then((_data) => {
-            this.$router.push('/dashboard')
-            this.$axios.setToken(this.$auth.getToken('local'))
+            this.$router.push("/dashboard");
+            this.$axios.setToken(this.$auth.getToken("local"));
           })
           .catch((_err) => {
-            this.login_error = true
-          })
+            this.login_error = true;
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>

@@ -6,7 +6,7 @@
         <img
           src="~assets/images/register.svg"
           class="h-auto w-full object-cover hidden lg:block"
-        >
+        />
       </div>
       <div class="flex-1">
         <div
@@ -31,7 +31,8 @@
                   <label
                     for="first_name"
                     class="block text-sm font-medium text-gray-700"
-                  >First name</label>
+                    >First name</label
+                  >
                   <input
                     id="first_name"
                     v-model="first_name"
@@ -39,15 +40,15 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-3 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="Aprila"
                     @input="$v.first_name.$touch()"
-                  >
+                  />
                   <div class="flex flex-col">
                     <p v-if="$v.first_name.$error" class="text-xs text-red-400">
-                      <span
-                        v-if="!$v.first_name.alpha"
-                      >* Only the alphabet!</span>
-                      <span
-                        v-else-if="!$v.first_name.required"
-                      >* First name required</span>
+                      <span v-if="!$v.first_name.alpha"
+                        >* Only the alphabet!</span
+                      >
+                      <span v-else-if="!$v.first_name.required"
+                        >* First name required</span
+                      >
                     </p>
                   </div>
                 </div>
@@ -55,7 +56,8 @@
                   <label
                     for="last_name"
                     class="block text-sm font-medium text-gray-700"
-                  >Last name</label>
+                    >Last name</label
+                  >
                   <input
                     id="last_name"
                     v-model="last_name"
@@ -63,15 +65,15 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-3 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="Hijriyan"
                     @input="$v.last_name.$touch()"
-                  >
+                  />
                   <div class="flex flex-col">
                     <p v-if="$v.last_name.$error" class="text-xs text-red-400">
-                      <span
-                        v-if="!$v.last_name.alpha"
-                      >* Only the alphabet!</span>
-                      <span
-                        v-else-if="!$v.last_name.required"
-                      >* Last name required</span>
+                      <span v-if="!$v.last_name.alpha"
+                        >* Only the alphabet!</span
+                      >
+                      <span v-else-if="!$v.last_name.required"
+                        >* Last name required</span
+                      >
                     </p>
                   </div>
                 </div>
@@ -80,7 +82,8 @@
                 <label
                   for="email"
                   class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
-                >Email:</label>
+                  >Email:</label
+                >
                 <div class="relative">
                   <div
                     class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
@@ -108,13 +111,13 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="user@email.com"
                     @input="$v.email.$touch()"
-                  >
+                  />
                 </div>
                 <div class="flex flex-col">
                   <p v-if="$v.email.$error" class="text-xs text-red-400">
-                    <span
-                      v-if="!$v.email.email"
-                    >* Please enter your email correctly</span>
+                    <span v-if="!$v.email.email"
+                      >* Please enter your email correctly</span
+                    >
                     <span v-else-if="!$v.email.required">* Email required</span>
                   </p>
                 </div>
@@ -123,7 +126,8 @@
                 <label
                   for="password"
                   class="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
-                >Password:</label>
+                  >Password:</label
+                >
                 <div class="relative">
                   <div
                     class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
@@ -153,16 +157,16 @@
                     class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
                     placeholder="123"
                     @input="$v.password.$touch()"
-                  >
+                  />
                 </div>
                 <div class="flex flex-col">
                   <p v-if="$v.password.$error" class="text-xs text-red-400">
-                    <span
-                      v-if="!$v.password.min_length"
-                    >* Minimum password length is 8</span>
-                    <span
-                      v-else-if="!$v.password.required"
-                    >* Password required</span>
+                    <span v-if="!$v.password.min_length"
+                      >* Minimum password length is 8</span
+                    >
+                    <span v-else-if="!$v.password.required"
+                      >* Password required</span
+                    >
                   </p>
                 </div>
               </div>
@@ -208,82 +212,81 @@
 </template>
 
 <script>
-import { required, email, alpha } from 'vuelidate/lib/validators'
+import { required, email, alpha, minLength } from "vuelidate/lib/validators";
 
 export default {
-  middleware: 'is_logged_in',
-  data () {
+  middleware: "is_logged_in",
+  data() {
     return {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
       login_error: false,
-      error_message: '',
-      success: false
-    }
+      error_message: "",
+    };
   },
   validations: {
     first_name: {
       required,
-      alpha
+      alpha,
     },
     last_name: {
       required,
-      alpha
+      alpha,
     },
     email: {
       required,
-      email
+      email,
     },
     password: {
-      required
-      // min_length: minLength(8)
-    }
+      required,
+      min_length: minLength(8),
+    },
   },
   methods: {
-    doResetData (all = true) {
-      this.first_name = ''
-      this.last_name = ''
-      this.email = ''
-      this.password = ''
+    doResetData(all = true) {
+      this.first_name = "";
+      this.last_name = "";
+      this.email = "";
+      this.password = "";
       if (all) {
-        this.login_error = false
-        this.error_message = ''
+        this.login_error = false;
+        this.error_message = "";
       }
-      this.$v.$reset()
+      this.$v.$reset();
     },
-    doRegister () {
-      this.$v.$touch()
+    doRegister() {
+      this.$v.$touch();
       if (this.$v.$invalid) {
-        this.login_error = false
+        this.login_error = false;
       } else {
-        const data = new FormData()
-        data.append('first_name', this.first_name)
-        data.append('last_name', this.last_name)
-        data.append('username', this.email)
-        data.append('password', this.password)
+        const data = new FormData();
+        data.append("first_name", this.first_name);
+        data.append("last_name", this.last_name);
+        data.append("username", this.email);
+        data.append("password", this.password);
         this.$axios
-          .$post('/auth/jwt/register', data)
+          .$post("/auth/jwt/register", data)
           .then((resp) => {
             this.$swal({
-              title: 'Thank you for registering',
-              icon: 'info'
-            })
-            this.doResetData()
+              title: "Thank you for registering",
+              icon: "info",
+            });
+            this.doResetData();
           })
           .catch((_err) => {
-            const data = _err.response.data
-            if (data && data.reason === 'Email already exists.') {
-              this.login_error = true
-              this.error_message = data.reason
+            const data = _err.response.data;
+            if (data && data.reason === "Email already exists.") {
+              this.login_error = true;
+              this.error_message = data.reason;
             }
-            this.doResetData(false)
-          })
+            this.doResetData(false);
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
