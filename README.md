@@ -1,6 +1,6 @@
 # Zemfrog NuxtJS + Tailwind CSS
 
-This is the nuxtjs + tailwindcss frontend for the zemfrog framework.
+This is the nuxtjs + tailwindcss frontend for the [zemfrog](https://github.com/zemfrog/zemfrog) framework.
 This includes login, register, password reset & account confirmation pages.
 
 ## Build Setup
